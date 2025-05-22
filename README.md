@@ -29,7 +29,7 @@ student_grade_predictor/
 ├── preprocessed_data.csv         # Integer-encoded preprocessed dataset
 ├── main.py                       # Original training pipeline
 ├── requirements.txt              # Python dependencies
-└── README.md                     # This file
+└── README.md                   
 ```
 
 ## 🚀 Quick Start
