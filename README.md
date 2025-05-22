@@ -26,10 +26,8 @@ student_grade_predictor/
 │   └── app.js                    # JavaScript functionality
 ├── saved_models/                 # Trained models storage
 │   └── best_model_improved.pkl  # Best performing model
-├── preprocessing.ipynb           # Jupyter notebook for data preprocessing
 ├── preprocessed_data.csv         # Integer-encoded preprocessed dataset
 ├── main.py                       # Original training pipeline
-├── main_improved.py              # Improved training pipeline with stratified sampling
 ├── requirements.txt              # Python dependencies
 └── README.md                     # This file
 ```
@@ -70,10 +68,8 @@ The data has been preprocessed using the included Jupyter notebook (`preprocessi
 ### 3. Train Models
 
 ```bash
-# Run the improved training pipeline (recommended)
-python main_improved.py
+# Run the training pipeline 
 
-# Or run the basic pipeline
 python main.py
 ```
 
