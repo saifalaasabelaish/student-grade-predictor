@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Predictor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .result-card {
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+        .result-card.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .grade-A { background: linear-gradient(135deg, #10b981, #059669); }
+        .grade-B { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .grade-C { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .grade-D { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">
+                    <i class="fas fa-graduation-cap mr-3"></i>
+                    Student Grade Predictor
+                </h1>
+                <p class="text-lg opacity-90">Predict student grades using AI-powered Naive Bayes classifier</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Prediction Form -->
+            <div class="bg-white rounded-xl card-shadow p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-user-graduate mr-2 text-blue-600"></i>
+                    Student Information
+                </h2>
+                
+                <form id="predictionForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Gender -->
+                        <div>
+                            <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-venus-mars mr-1"></i>
+                                Gender
+                            </label>
+                            <select id="gender" name="gender" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+
+                        <!-- Transportation -->
+                        <div>
+                            <label for="transportation" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-car mr-1"></i>
+                                Transportation
+                            </label>
+                            <select id="transportation" name="transportation" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                                <option value="">Select Transportation</option>
+                                <option value="Bus">Bus</option>
+                                <option value="Car">Car</option>
+                            </select>
+                        </div>
+
+                        <!-- Accommodation -->
+                        <div>
+                            <label for="accommodation" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-home mr-1"></i>
+                                Accommodation
+                            </label>
+                            <select id="accommodation" name="accommodation" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                                <option value="">Select Accommodation</option>
+                                <option value="Dorms">Dorms</option>
+                                <option value="With familly">With Family</option>
+                            </select>
+                        </div>
+
+                        <!-- Mid Exam Preparation -->
+                        <div>
+                            <label for="mid_exam" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-clock mr-1"></i>
+                                Mid-term Preparation
+                            </label>
+                            <select id="mid_exam" name="mid_exam" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                                <option value="">Select Preparation Style</option>
+                                <option value="Regularly during the semester">Regularly During The Semester</option>
+                                <option value="Closest day to the exam">Closest Day To The Exam</option>
+                            </select>
+                        </div>
+
+                        <!-- Taking Notes -->
+                        <div class="md:col-span-2">
+                            <label for="taking_notes" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-sticky-note mr-1"></i>
+                                Taking Notes in Classes
+                            </label>
+                            <select id="taking_notes" name="taking_notes" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                                <option value="">Select Note-taking Frequency</option>
+                                <option value="Always">Always</option>
+                                <option value="Sometimes">Sometimes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center pt-4">
+                        <button type="submit" id="predictBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <i class="fas fa-magic mr-2"></i>
+                            <span id="btnText">Predict Grade</span>
+                            <i id="loadingIcon" class="fas fa-spinner loading ml-2 hidden"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="result-card hidden">
+                <div class="bg-white rounded-xl card-shadow p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                        <i class="fas fa-chart-line mr-2 text-green-600"></i>
+                        Prediction Results
+                    </h2>
+                    
+                    <div id="predictionResults">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="result-card hidden">
+                <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-500 mr-3"></i>
+                        <h3 class="text-lg font-medium text-red-800">Prediction Error</h3>
+                    </div>
+                    <p id="errorMessage" class="text-red-700 mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Student Grade Predictor. Powered by Naive Bayes Machine Learning.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
