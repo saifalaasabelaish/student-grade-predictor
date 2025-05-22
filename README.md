@@ -73,12 +73,6 @@ The data has been preprocessed using the included Jupyter notebook (`preprocessi
 python main.py
 ```
 
-The improved pipeline includes:
-- Stratified data splitting for balanced train/validation/test sets
-- Comprehensive data analysis and feature relationships
-- Overfitting detection and model comparison
-- Better handling of integer-encoded categorical data
-
 ### 4. Start the API Server
 
 ```bash
