@@ -40,7 +40,7 @@ student_grade_predictor/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/saifalaasabelaish/student-grade-predictor
 cd student_grade_predictor
 
 # Install dependencies
